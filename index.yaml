@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  cifs-linux:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-06-30T14:46:36.085540306Z"
+    description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on
+      https://github.com/nelvadas/cifs-flexvolume-k8s)
+    digest: ce79eedb71c70419f773e821624a8e4b139ff555d9d6034606ebf2f089b84d60
+    name: cifs-linux
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.0/cifs-linux-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-06-30T14:46:36.009659615Z"
