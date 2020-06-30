@@ -1,0 +1,39 @@
+flexVolumePluginPath: "/var/lib/kubelet/volumeplugins/"
+nameOverride: "flexvolume-cifs-installer-linux"
+
+image:
+  repository: nelvadas/cifs-flexvol-installer
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "1.0.1"
+
+nodeSelector:
+  kubernetes.io/os: linux  # only works on linux
+
+tolerations: []
+
+securityContext:
+  privileged: true  # needed for installing
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+podAnnotations: {}
+
+imagePullSecrets: []
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+affinity: {}

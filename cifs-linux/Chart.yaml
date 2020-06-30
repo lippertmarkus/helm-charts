@@ -1,0 +1,6 @@
+apiVersion: v2
+name: cifs-linux
+description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on https://github.com/nelvadas/cifs-flexvolume-k8s)
+type: application
+version: 0.1.0
+appVersion: 1.16.0
