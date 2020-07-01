@@ -1,0 +1,14 @@
+{{- if .Values.secretNames.windows -}}
+{{- $os := dict "Values" .Values "Chart" .Chart "Release" .Release "Os" "windows" }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "cifs-share.fullname" $os }}
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.storageCapacity }}
+  volumeName: {{ include "cifs-share.pv-fullname" $os }}
+{{- end }}  

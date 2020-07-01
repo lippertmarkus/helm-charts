@@ -1,0 +1,23 @@
+{{- if .Values.secretNames.linux -}}
+{{- $os := dict "Values" .Values "Chart" .Chart "Release" .Release "Os" "linux" }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "cifs-share.pv-fullname" $os }}
+  labels:
+    {{- include "cifs-share.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ .Values.storageCapacity }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  flexVolume:
+    driver: "fstab/cifs"
+    fsType: "cifs"
+    secretRef:
+      name: {{ .Values.secretNames.linux }}
+    options:
+      networkPath: {{ .Values.networkPath }}
+      mountOptions: {{ .Values.linuxMountOptions }}
+  {{- end }}

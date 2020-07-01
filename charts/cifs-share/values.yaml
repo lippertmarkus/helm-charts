@@ -1,0 +1,11 @@
+fullnameOverride: ""
+
+networkPath: "" # e.g. //10.111.90.78/share
+
+storageCapacity: 3Gi
+
+secretNames:
+  linux:
+  windows: 
+
+linuxMountOptions: "dir_mode=0777,file_mode=0777"

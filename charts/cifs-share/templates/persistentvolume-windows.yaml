@@ -1,0 +1,25 @@
+{{- if .Values.secretNames.windows -}}
+{{- $os := dict "Values" .Values "Chart" .Chart "Release" .Release "Os" "windows" }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ include "cifs-share.pv-fullname" $os }}
+  labels:
+    {{- include "cifs-share.labels" . | nindent 4 }}
+spec:
+  capacity:
+    storage: {{ .Values.storageCapacity }}
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  flexVolume:
+    driver: "microsoft.com/smb.cmd"
+    secretRef:
+      name: {{ .Values.secretNames.windows }}
+    options:
+      # source can be in any of the following formats 
+      # \\servername\share\path  (\'s will need to be escaped)
+      # smb://servername/share/path
+      # //servername/share/path
+      source: {{ .Values.networkPath }}
+{{- end }}
