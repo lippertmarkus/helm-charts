@@ -20,7 +20,7 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "cifs-share.pv-fullname" -}}
-{{ printf "%s-%s" (include "cifs-share.namespace") (include "cifs-share.fullname" .) | trunc 63 | trimSuffix "-" }}
+{{ printf "%s-%s" (include "cifs-share.namespace" .) (include "cifs-share.fullname" .) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
