@@ -1,5 +1,5 @@
 fullnameOverride: ""
-namespaceOverride: ""
+namespaceOverride: ""  # allows overriding the namespace
 
 networkPath: "" # e.g. //10.111.90.78/share
 
