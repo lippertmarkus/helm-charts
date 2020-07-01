@@ -3,6 +3,17 @@ entries:
   cifs-linux:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2020-07-01T12:24:49.393935965Z"
+    description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on
+      https://github.com/nelvadas/cifs-flexvolume-k8s)
+    digest: f880ca55a6bcbea7722b40297c1f37211934206c6a0aa4be4119b389e64f4775
+    name: cifs-linux
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.2/cifs-linux-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-07-01T11:36:52.373793034Z"
     description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on
       https://github.com/nelvadas/cifs-flexvolume-k8s)
@@ -24,6 +35,17 @@ entries:
     - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.0/cifs-linux-0.1.0.tgz
     version: 0.1.0
   cifs-share:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T12:24:49.472131537Z"
+    description: Creates a PV and PVC for Windows and Linux using the fstab/cifs or
+      the microsoft.com/smb.cmd Flexvolume driver
+    digest: 957d8b90eeaf5d90abaebb2ef0a4b31e5515a132a65c3bd85074c20fa0913e9f
+    name: cifs-share
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-share-0.1.1/cifs-share-0.1.1.tgz
+    version: 0.1.1
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-07-01T11:36:52.443784518Z"
