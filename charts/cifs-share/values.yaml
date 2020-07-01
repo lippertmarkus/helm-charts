@@ -1,4 +1,5 @@
 fullnameOverride: ""
+namespaceOverride: ""
 
 networkPath: "" # e.g. //10.111.90.78/share
 

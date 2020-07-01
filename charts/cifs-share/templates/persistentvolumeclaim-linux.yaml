@@ -4,6 +4,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "cifs-share.fullname" $os }}
+  namespace: {{ include "cifs-share.namespace" . }}
 spec:
   accessModes:
   - ReadWriteMany
