@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "business-central.fullname" . }}
+  labels:
+    {{- include "business-central.labels" . | nindent 4 }}
+data:
+  CheckHealth.ps1: |-
+    $healthcheckurl = ("http://localhost/" + $env:webserverinstance + "/")
+    try {
+        $result = Invoke-WebRequest -Uri "${healthcheckurl}Health/System" -UseBasicParsing -TimeoutSec 10
+        if ($result.StatusCode -eq 200 -and ((ConvertFrom-Json $result.Content).result)) {
+            # Web Client Health Check Endpoint will test Web Client, Service Tier and Database Connection
+            exit 0
+        }
+    } catch {
+    }
+    exit 1
+  SetupDatabase.ps1: |-
+    $oldVal = $myPath 
+    $myPath = $runPath
+    . (Join-Path $runPath $MyInvocation.MyCommand.Name)
+    $myPath = $oldVal

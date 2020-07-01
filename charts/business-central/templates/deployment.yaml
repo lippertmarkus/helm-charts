@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "business-central.fullname" . }}
+  labels:
+    {{- include "business-central.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "business-central.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "business-central.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "business-central.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+            - name: soap
+              containerPort: 7047
+              protocol: TCP
+            - name: odata
+              containerPort: 7048
+              protocol: TCP
+            - name: dev
+              containerPort: 7049
+              protocol: TCP
+            - name: dl
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+          - name: myscripts
+            mountPath: C:/Run/my
+          livenessProbe:
+            exec:
+              command:
+              - powershell
+              - C:\Run\my\CheckHealth.ps1
+            periodSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            exec:
+              command:
+              - powershell
+              - C:\Run\my\CheckHealth.ps1
+            periodSeconds: 5
+            failureThreshold: 5
+          startupProbe:
+            exec:
+              command:
+              - powershell
+              - C:\Run\my\CheckHealth.ps1
+            timeoutSeconds: 2
+            initialDelaySeconds: 30
+            # wait up to 300s for startup
+            periodSeconds: 5
+            failureThreshold: 60
+          env:
+            - name: publicdnsname
+              value: "{{ .Values.ingress.basedomain }}"
+            - name: accept_eula
+              value: "Y"
+            - name: ACCEPT_OUTDATED
+              value: "Y"
+            - name: UseSSL
+              value: "N"
+            - name: HttpSite
+              value: "N"
+            {{- if .Values.database.custom }}
+            - name: databaseServer
+              value: "{{ .Values.database.server }}"
+            - name: databaseInstance
+              value: "{{ .Values.database.instance }}"
+            - name: databaseName
+              value: "{{ .Values.database.name }}"
+            - name: databaseUserName
+              value: "{{ .Values.database.username }}"
+            - name: databasePassword
+              value: "{{ .Values.database.password }}"
+            {{- end }}
+            - name: webserverinstance
+              value: "BC"
+            {{- if .Values.password }}
+            - name: password
+              value: "{{ .Values.password }}"
+            {{- end }}
+            - name: customnavsettings
+              value: "{{ .Values.ingress.urls }}"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+       - name: myscripts
+         configMap:
+           name: {{ include "business-central.fullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
