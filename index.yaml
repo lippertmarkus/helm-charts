@@ -1,6 +1,28 @@
 apiVersion: v1
 entries:
+  azure-devops-agent:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T13:37:04.466913698Z"
+    description: A Helm chart for Kubernetes
+    digest: c3babf7f2c7a7d7835d86b02cfffdfe7325d9764878eb33787b8c82731dffc99
+    name: azure-devops-agent
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/azure-devops-agent-0.1.0/azure-devops-agent-0.1.0.tgz
+    version: 0.1.0
   cifs-linux:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T13:37:04.553457684Z"
+    description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on
+      https://github.com/nelvadas/cifs-flexvolume-k8s)
+    digest: 4b84f688edc99437b27d7cca49b02064b6167289cde118d1a5ca05a47a4c835b
+    name: cifs-linux
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.4/cifs-linux-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-07-01T12:31:08.133639282Z"
@@ -46,6 +68,17 @@ entries:
     - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.0/cifs-linux-0.1.0.tgz
     version: 0.1.0
   cifs-share:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T13:37:04.628372172Z"
+    description: Creates a PV and PVC for Windows and Linux using the fstab/cifs or
+      the microsoft.com/smb.cmd Flexvolume driver
+    digest: d414fc1986a66e97cfdb763a6cb21fe00ce3c6d3c9da2d1903a67adf38eb0793
+    name: cifs-share
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-share-0.1.3/cifs-share-0.1.3.tgz
+    version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-07-01T12:31:08.379591954Z"
