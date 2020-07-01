@@ -3,6 +3,17 @@ entries:
   azure-devops-agent:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2020-07-01T16:15:22.784853198Z"
+    description: Chart for deploying a Azure Pipelines Agent against an existing Azure
+      DevOps instance.
+    digest: ca1c90573640dde77c165ad8c49daf8478b80efdb9820ac3beec7cdef324c5c4
+    name: azure-devops-agent
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/azure-devops-agent-0.1.1/azure-devops-agent-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-07-01T13:37:04.466913698Z"
     description: A Helm chart for Kubernetes
     digest: c3babf7f2c7a7d7835d86b02cfffdfe7325d9764878eb33787b8c82731dffc99
@@ -11,7 +22,29 @@ entries:
     urls:
     - https://github.com/lippertmarkus/helm-charts/releases/download/azure-devops-agent-0.1.0/azure-devops-agent-0.1.0.tgz
     version: 0.1.0
+  business-central:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T16:15:22.867828822Z"
+    description: Chart for Microsoft Dynamics 365 Business Central
+    digest: 8499a3bb6b3755b348777c0edba2f0db65a6a09f5c4c0b6fc3117e50bf41d576
+    name: business-central
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/business-central-0.1.0/business-central-0.1.0.tgz
+    version: 0.1.0
   cifs-linux:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T16:15:22.942303664Z"
+    description: Deploys a Flexvolume driver for CIFS on all Linux nodes (based on
+      https://github.com/nelvadas/cifs-flexvolume-k8s)
+    digest: 2f36d8cf4a2642baccd1c64a7c76c3c09654ce479a85f48307741cc1884976ef
+    name: cifs-linux
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.5/cifs-linux-0.1.5.tgz
+    version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-07-01T13:37:04.553457684Z"
@@ -68,6 +101,17 @@ entries:
     - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-linux-0.1.0/cifs-linux-0.1.0.tgz
     version: 0.1.0
   cifs-share:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-07-01T16:15:23.019363601Z"
+    description: Creates a PV and PVC for Windows and Linux using the fstab/cifs or
+      the microsoft.com/smb.cmd Flexvolume driver
+    digest: 485073f4086f3a40bed240377dd764efe0fb272ef1fcf5c99307069dee57bf5c
+    name: cifs-share
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/cifs-share-0.1.4/cifs-share-0.1.4.tgz
+    version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2020-07-01T13:37:04.628372172Z"
