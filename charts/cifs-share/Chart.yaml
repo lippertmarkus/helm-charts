@@ -2,5 +2,5 @@ apiVersion: v2
 name: cifs-share
 description: Creates a PV and PVC for Windows and Linux using the fstab/cifs or the microsoft.com/smb.cmd Flexvolume driver
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: 1.16.0
