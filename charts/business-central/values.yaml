@@ -88,3 +88,31 @@ nodeSelector:
 tolerations: []
 
 affinity: {}
+
+publish:
+  enabled: false
+
+  download:
+    image:
+      repository: lippertmarkus/al-nuget
+      pullPolicy: Always
+      tag: latest-linux
+    params: 
+      # nugetLocation: https://myorg.pkgs.visualstudio.com/MyALProject/_packaging/myrepo/nuget/v3/index.json
+      # patSecretName: vsts-nuget-pat
+      # dependencies:
+      #   - publisher: Comp
+      #     name: AppName
+      #     version: "1.2.3.4"
+
+  image:
+    repository: lippertmarkus/bc-app-import
+    pullPolicy: Always
+    tag: latest
+
+  nodeSelector:
+    kubernetes.io/os: linux
+
+  tolerations: []
+
+  affinity: {}
