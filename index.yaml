@@ -36,6 +36,16 @@ entries:
   business-central:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2020-08-11T05:20:31.407836479Z"
+    description: Chart for Microsoft Dynamics 365 Business Central
+    digest: f64ff97509e12cd975b99ee861b12bc880653c76d85a671b85fb7b96f69473df
+    name: business-central
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/business-central-0.1.2/business-central-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-07-09T08:23:21.587416664Z"
     description: Chart for Microsoft Dynamics 365 Business Central
     digest: 43ca9a8ecc3c4b7c5063b9871b5e01621851c10204c02d442d3ae6dc1db40aed
