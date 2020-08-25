@@ -32,11 +32,16 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+          {{- if .Values.tfsHost }}
+          - name: TFS_HOST
+            value: {{ .Values.tfsHost }}
+          {{- else }}
           - name: VSTS_ACCOUNT
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.vstsSecret }}
                 key: account
+          {{- end }}
           - name: VSTS_TOKEN
             valueFrom:
               secretKeyRef:

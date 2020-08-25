@@ -13,6 +13,8 @@ mountedVolumes: []
 
 agentName: $(hostname)
 workDirectory: _work
+# Hostname of on-premises TFS
+tfsHost: ""  
 
 image:
   repository: mcr.microsoft.com/azure-pipelines/vsts-agent
