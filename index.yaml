@@ -3,6 +3,17 @@ entries:
   azure-devops-agent:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2020-08-25T11:42:38.201541666Z"
+    description: Chart for deploying a Azure Pipelines Agent against an existing Azure
+      DevOps instance.
+    digest: 2e8329fdc8f594c87228c498e573281dd7b1b79e60f06351c507049c4055cb71
+    name: azure-devops-agent
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/azure-devops-agent-0.1.4/azure-devops-agent-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2020-08-13T11:24:40.077086671Z"
     description: Chart for deploying a Azure Pipelines Agent against an existing Azure
       DevOps instance.
