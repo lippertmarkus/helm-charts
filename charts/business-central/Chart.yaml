@@ -2,5 +2,5 @@ apiVersion: v2
 name: business-central
 description: Chart for Microsoft Dynamics 365 Business Central
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: 1.16.0
