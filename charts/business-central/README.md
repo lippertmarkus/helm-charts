@@ -73,16 +73,16 @@ There are four ways for accessing Business Central:
 - You can also access Business Central **via ports of the nodes** in your cluster by setting `service.type` to `NodePort`. Follow the instructions displayed after the installation on how to get the port to access the Business Central web client via your Nodes. 
 
 - Using **Ingress** is another option. If you already have an [ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) deployed you can just enable the ingress option and define the hosts where the web client and web service endpoints should be accessible at:
-  ```yaml
-  ingress:
-    enabled: true
-    hosts:
-      - host: bc1.example.com
-        path: /  # optional, use a sub path
-        servicePort: web
-      - host: dev.bc1.example.com
-        servicePort: dev
-  ```
+```yaml
+ingress:
+  enabled: true
+  hosts:
+    - host: bc1.example.com
+      path: /  # optional, use a sub path
+      servicePort: web
+    - host: dev.bc1.example.com
+      servicePort: dev
+```
 
 ### Using artifacts and pre-built images
 
