@@ -7,25 +7,41 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.ports.http }}
-      targetPort: http
+    {{- if .Values.service.ports.web }}
+    - port: {{ .Values.service.ports.web }}
+      targetPort: web
       protocol: TCP
-      name: http
+      name: web
+    {{- end }}
+    {{- if .Values.service.ports.webtls }}
+    - port: {{ .Values.service.ports.webtls }}
+      targetPort: webtls
+      protocol: TCP
+      name: webtls
+    {{- end }}
+    {{- if .Values.service.ports.soap }}
     - port: {{ .Values.service.ports.soap }}
       targetPort: soap
       protocol: TCP
       name: soap
+    {{- end }}
+    {{- if .Values.service.ports.odata }}
     - port: {{ .Values.service.ports.odata }}
       targetPort: odata
       protocol: TCP
       name: odata
+    {{- end }}
+    {{- if .Values.service.ports.dev }}
     - port: {{ .Values.service.ports.dev }}
       targetPort: dev
       protocol: TCP
       name: dev
+    {{- end }}
+    {{- if .Values.service.ports.dl }}
     - port: {{ .Values.service.ports.dl }}
       targetPort: dl
       protocol: TCP
       name: dl
+    {{- end }}
   selector:
     {{- include "business-central.selectorLabels" . | nindent 4 }}

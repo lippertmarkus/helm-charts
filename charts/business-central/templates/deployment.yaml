@@ -32,10 +32,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
+            - name: web
               containerPort: 80
               protocol: TCP
-            - name: https
+            - name: webtls
               containerPort: 443
               protocol: TCP
             - name: soap
@@ -53,6 +53,10 @@ spec:
           volumeMounts:
           - name: myscripts
             mountPath: C:/Run/my
+          {{- if .Values.passwordKeySecretName }}
+          - name: password-key
+            mountPath: C:/Run/my/key
+          {{- end }}
           livenessProbe:
             exec:
               command:
@@ -74,20 +78,20 @@ spec:
               - C:\Run\my\CheckHealth.ps1
             timeoutSeconds: 2
             initialDelaySeconds: 30
-            # wait up to 300s for startup
+            # wait up to 350s for startup
             periodSeconds: 5
-            failureThreshold: 60
+            failureThreshold: 70
           env:
-            - name: publicdnsname
-              value: "{{ .Values.ingress.basedomain }}"
-            - name: accept_eula
-              value: "Y"
-            - name: ACCEPT_OUTDATED
-              value: "Y"
-            - name: UseSSL
-              value: "N"
-            - name: HttpSite
-              value: "N"
+            - name: webserverinstance
+              value: BC
+            {{- if .Values.image.artifactUrl }}
+            - name: ArtifactUrl
+              value: "{{ .Values.image.artifactUrl }}"
+            {{- end }}
+            {{- if .Values.passwordKeySecretName }}
+            - name: passwordKeyFile
+              value: C:\\run\\my\\key\\passwordKey
+            {{- end }}
             {{- if .Values.database.custom }}
             - name: databaseServer
               value: "{{ .Values.database.server }}"
@@ -97,23 +101,48 @@ spec:
               value: "{{ .Values.database.name }}"
             - name: databaseUserName
               value: "{{ .Values.database.username }}"
+            {{- if .Values.database.securePassword }}
+            - name: databaseSecurepassword
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "business-central.fullname" . }}
+                  key: dbSecurePassword
+            {{- else }}
             - name: databasePassword
-              value: "{{ .Values.database.password }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "business-central.fullname" . }}
+                  key: dbPassword
             {{- end }}
-            - name: webserverinstance
-              value: "BC"
-            {{- if .Values.password }}
+            {{- end }}
+            {{- if .Values.securePassword }}
+            - name: securepassword
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "business-central.fullname" . }}
+                  key: securePassword
+            {{- else }}
             - name: password
-              value: "{{ .Values.password }}"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "business-central.fullname" . }}
+                  key: password
             {{- end }}
-            - name: customnavsettings
-              value: "{{ .Values.ingress.urls }}"
+            {{- range $name, $value := .Values.env }}
+            - name: {{ $name }}
+              value: {{ $value | quote }}
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-       - name: myscripts
-         configMap:
-           name: {{ include "business-central.fullname" . }}
+      {{- if .Values.passwordKeySecretName }}
+      - name: password-key
+        secret:
+          secretName: {{ .Values.passwordKeySecretName }}
+      {{- end }}
+      - name: myscripts
+        configMap:
+          name: {{ include "business-central.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

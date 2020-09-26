@@ -1,34 +1,93 @@
-password: ""  # insecure!
+image:
+  # image.repository -- Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#TODO) for mor information. around the two options.
+  repository: mcr.microsoft.com/dynamicsnav
+  # image.tag -- Tag of the image to use
+  tag: 10.0.17763.1397-generic
+  # image.artifactUrl -- URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#TODO) for mor information. around the two options.
+  artifactUrl: https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1
+  # image.pullPolicy -- Whether to `Always` try pulling the image or only `IfNotPresent`.
+  pullPolicy: IfNotPresent
+
+
+# password -- **Insecure** clear-text password of the admin user. Leave empty for a random password. Consider using `securePassword` and `passwordKeySecretName` instead.
+password: ""
+# securePassword -- AES-encrypted password of the admin user. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works.
+securePassword: ""
+
 
 database:
-  custom: false
-  server: "mssql-server"
+  # database.custom -- Enable to connect to an external SQL server with a Business Central database.
+  custom: false  
+  # database.server -- SQL Server to connect to, e.g. `myserver.database.windows.net`.
+  server: ""
+  # database.instance -- SQL Server instance to connect to, e.g. `SQL2019`. Leave empty to use the default instance.
   instance: ""
-  name: cronus
-  username: sa
-  password: ""  # insecure!
+  # database.name -- Name of the database to connect to, e.g. `cronus`.
+  name: ""
+  # database.username -- User used to connect to the SQL database, e.g. `sa`.
+  username: ""
+  # database.password -- **Insecure** clear-text password of the user to connect with. Consider using `database.securePassword` and `passwordKeySecretName` instead.
+  password: "" 
+  # database.securePassword -- AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works.
+  securePassword: ""
 
+
+# env -- Configure application via environment variables. See `values.yaml` for more options you can add.
+# @default -- *The two variables below are set per default*
+env:
+  # env.Accept_eula -- Whether to accept (`Y`) or decline (`N`) the [EULA](https://go.microsoft.com/fwlink/?linkid=861843).
+  Accept_eula: "Y"
+  # env.UseSSL -- Whether to use SSL for the webclient (`Y`) or not (`N`). If set to `Y` generates a self-signed certificate per default.
+  UseSSL: "N"
+  # PublicDnsName: bc1.example.com
+  # Accept_outdated: Y
+  # Auth: NavUserPassword  # Windows, NavUserPassword
+  # username: admin
+  # licensefile: https://lic.example.com/lic.flf
+  # appBacpac: ""
+  # tenantBacpac: ""
+  # multitenant: N
+  # bakfile: "https://baks.example.com/mydb.bak"
+  # WebClient: Y
+  # HttpSite: N
+  # locale: ""
+  # enableSymbolLoading: N
+  # enableApiServices: N
+  # customNavSettings: ""
+  # customWebSettings: ""
+  # exitOnError: N
+
+
+# customScripts -- Add custom PowerShell scripts to the container. They can override the default scripts like described [here](https://github.com/microsoft/nav-docker/blob/master/HOWTO.md#appendix-1--scripts).
+customScripts:
+  AdditionalSetup.ps1: |-
+    Write-Host "This was created by Kubernetes."
+
+# passwordKeySecretName -- Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#TODO) on how this works.
+passwordKeySecretName: ""
+
+# replicaCount -- Number of replicas to deploy.
 replicaCount: 1
 
-image:
-  repository: mcr.microsoft.com/businesscentral/onprem
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "ltsc2019"
-
+# imagePullSecrets -- List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod).
 imagePullSecrets: []
+# nameOverride -- Override the name of the Helm deployment which the chart name gets prefixed with, e.g. `myoverride-business-central`.
 nameOverride: ""
+# fullnameOverride -- Override the full name of the deployment, e.g. `myfullnameoverride`.
 fullnameOverride: ""
 
 serviceAccount:
-  # The name of the service account to use.
+  # serviceAccount.name -- The name of the [service account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) to use.
   name: ""
 
+# podAnnotations -- [Annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) to add to the metadata of the Pods.
 podAnnotations: {}
 
+# podSecurityContext -- Configure the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) of the Pod.
 podSecurityContext: {}
   # fsGroup: 2000
 
+# securityContext -- Configure the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) of the Container.
 securityContext: {}
   # capabilities:
   #   drop:
@@ -37,44 +96,62 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
+
 service:
+  # service.type -- [Type of the service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) which exposes Business Central, e.g. `ClusterIP`, `LoadBalancer` or `NodePort`.
   type: ClusterIP
-  ports: 
-    http: 80
+  ports:
+    # service.ports.web -- Port of the service to access the web client. Remove to disable access.
+    web: 80
+    # service.ports.webtls -- Port of the service to access the web client via TLS. Remove to disable access.
+    webtls: 443
+    # service.ports.soap -- Port of the service to access the SOAP webservices. Remove to disable access.
     soap: 7047
+    # service.ports.odata -- Port of the service to access the OData webservice. Remove to disable access.
     odata: 7048
+    # service.ports.dev -- Port of the service to access the development endpoint. Remove to disable access.
     dev: 7049
+    # service.ports.dl -- Port of the service to access the files like the AL VS code extension via web. Remove to disable access.
     dl: 8080
 
 ingress:
+  # ingress.enabled -- Enable to allow access via [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress).
   enabled: false
-  basedomain: bc1.foo.bar
-  urls: PublicODataBaseUrl=http://odata-$(publicdnsname)/BC/OData,PublicSOAPBaseUrl=http://soap-$(publicdnsname)/BC/WS
+  # ingress.annotations -- Annotations to add to the ingress resource, e.g. `kubernetes.io/tls-acme: "true"`
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - predomain: ""
-      servicePort: http
-    - predomain: "odata-"
-      servicePort: odata
-    - predomain: "soap-"
-      servicePort: soap
-    - predomain: "dev-"
-      servicePort: dev
-    - predomain: "dl-"
-      servicePort: dl
+  # ingress.hosts -- List of hosts with `host`, `path` and `servicePort` which the ingress routes to the Business Central instance. See [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource).
+  # E.g. `[{"host":"bc1.example.com","path":"/","servicePort":"web"}]` routes traffic from `http://bc1.example.com/` to the webclient. Using a subpath in `path` may requires [rewriting via annotations](https://kubernetes.github.io/ingress-nginx/examples/rewrite/). The `servicePort` can be one of `web`, `webtls`, `odata`, `soap`, `dev`, `dl` described under `service.ports.*`.
+  hosts: []
+    # - host: bc1.example.com
+    #   path: /
+    #   servicePort: web
+    # - host: bc1-secure.example.com
+    #   path: /
+    #   servicePort: webtls
+    # - host: "odata.bc1.example.com"
+    #   path: /
+    #   servicePort: odata
+    # - host: "soap.bc1.example.com"
+    #   path: /
+    #   servicePort: soap
+    # - host: "dev.bc1.example.com"
+    #   path: /
+    #   servicePort: dev
+    # - host: "dl.bc1.example.com"
+    #   path: /
+    #   servicePort: dl
 
+  # ingress.tls -- List of secrets with a TLS certificate and hosts from `ingress.hosts` to use the certificate for. See [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls).
+  # E.g. `[{"hosts":["bc1.example.com"],"secretName":"example-tls"}]`
   tls: []
-  #  - secretName: chart-example-tls
+  #  - secretName: example-tls
   #    hosts:
-  #      - chart-example.local
+  #      - bc1.example.com
 
+# resources -- Limit [CPU](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit) and [memory](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/#specify-a-memory-request-and-a-memory-limit) resources this workload can use.
 resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -82,37 +159,62 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# nodeSelector -- Use to select specific nodes to schedule the deployment to like described in the Kubernetes [docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector).
+# @default -- *see below*
 nodeSelector:
+  # nodeSelector."kubernetes.io/os" -- OS to schedule the deployment to.
   kubernetes.io/os: windows
 
+# tolerations -- List with [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) this workload has.
 tolerations: []
 
+# affinity -- Constrain which nodes the workload is eligible to be scheduled on, see [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity).
 affinity: {}
 
+# publish -- **EXPERIMENTAL**: Automatically download an AL app with `publish.download.image.*` and publish it with `publish.image.*`
+# @default -- *see below*
 publish:
+  # publish.enabled -- Whether to enable automatically downloading AL app files and publish them
   enabled: false
 
   download:
     image:
+      # publish.download.image.repository -- Repository of the image to use for downloading AL app files.
       repository: lippertmarkus/al-nuget
+      # publish.download.image.tag -- Tag of the image to use.
+      tag: latest
+      # publish.download.image.pullPolicy -- Whether to `Always` try pulling the image or only `IfNotPresent`.
       pullPolicy: Always
-      tag: latest-linux
+    # publish.download.params -- Parameters for downloading the AL app files. This is currently specific for `lippertmarkus/al-nuget`.
+    # @default -- *see below*
     params: 
-      # nugetLocation: https://myorg.pkgs.visualstudio.com/MyALProject/_packaging/myrepo/nuget/v3/index.json
-      # patSecretName: vsts-nuget-pat
-      # dependencies:
-      #   - publisher: Comp
-      #     name: AppName
-      #     version: "1.2.3.4"
+      # publish.download.params.nugetLocation -- URL of the NuGet feed to use, e.g. `https://myorg.pkgs.visualstudio.com/myproj/_packaging/myfeed/nuget/v3/index.json`
+      nugetLocation: ""
+      # publish.download.params.patSecretName -- Name of the Kubernetes secret with a `pat` field containing a personal access token for accessing the NuGet feed.
+      patSecretName: ""
+      # publish.download.params.dependencies -- AL app files to download from NuGet. This get's passed as JSON to the container.
+      # E.g. `[{"name":"AppName","publisher":"Comp","version":"1.2.3.4"}]` for downloading a package `Comp_AppName` with version `1.2.3.4`
+      dependencies: []
+        # - publisher: Comp
+        #   name: AppName
+        #   version: "1.2.3.4"
 
   image:
+    # publish.image.repository -- Repository of the image to use for importing AL app files.
     repository: lippertmarkus/bc-app-import
-    pullPolicy: Always
+    # publish.image.tag -- Tag of the image to use.
     tag: latest
+    # publish.image.pullPolicy -- Whether to `Always` try pulling the image or only `IfNotPresent`.
+    pullPolicy: Always
 
+  # publish.nodeSelector -- Use to select specific nodes to schedule the publish job to like described in the Kubernetes [docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector).
+  # @default -- *see below*
   nodeSelector:
+    # publish.nodeSelector."kubernetes.io/os" -- OS to schedule the publish job to.
     kubernetes.io/os: linux
 
+  # publish.tolerations -- List with [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) the publish job has.
   tolerations: []
 
+  # publish.affinity -- Constrain which nodes the publish job is eligible to be scheduled on, see [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity).
   affinity: {}

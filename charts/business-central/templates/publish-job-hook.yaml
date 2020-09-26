@@ -44,11 +44,37 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.publish.image.repository }}:{{ .Values.publish.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.publish.image.pullPolicy }}
-          args: ["-user", "admin", "-password", "{{ .Values.password }}", "-appFile", "/a/.alpackages/", "-devServer", "http://{{ include "business-central.fullname" . }}:7049/BC"]
+          args: [
+            "-user", "admin", 
+            "-appFile", "/a/.alpackages/", 
+            "-devServer", "http://{{ include "business-central.fullname" . }}:7049/BC",
+            {{- if .Values.securePassword }}
+            "-passwordFile", "/secret/securePassword",
+            {{- else }}
+            "-passwordFile", "/secret/password",
+            {{- end }}
+            {{- if .Values.passwordKeySecretName }}
+            "-passwordKeyFile", "/secret-key/passwordKey",
+            {{- end }}
+            ]
           volumeMounts:
             - name: temp-download
               mountPath: /a
+            - name: passwords
+              mountPath: /secret
+            {{- if .Values.passwordKeySecretName }}
+            - name: password-key
+              mountPath: /secret-key
+            {{- end }}
       volumes:
+        - name: passwords
+          secret:
+            secretName: {{ include "business-central.fullname" . }}
+        {{- if .Values.passwordKeySecretName }}
+        - name: password-key
+          secret:
+            secretName: {{ .Values.passwordKeySecretName }}
+        {{- end }}
         - name: nuget-pat
           secret:
             secretName: {{ .Values.publish.download.params.patSecretName }}

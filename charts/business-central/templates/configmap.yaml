@@ -6,8 +6,35 @@ metadata:
     {{- include "business-central.labels" . | nindent 4 }}
 data:
   CheckHealth.ps1: |-
-    $healthcheckurl = ("http://localhost/" + $env:webserverinstance + "/")
+    if ($env:UseSSL -eq "N") {
+      $healthcheckurl = ("http://localhost/" + $env:webserverinstance + "/")
+    } else {
+      $healthcheckurl = ("https://localhost/" + $env:webserverinstance + "/")
+    }
+
+    if ($healthcheckurl.StartsWith("https")) {
+        if (-not("dummy" -as [type])) {
+            add-type -TypeDefinition @"
+    using System;
+    using System.Net;
+    using System.Net.Security;
+    using System.Security.Cryptography.X509Certificates;
+    public static class Dummy {
+        public static bool ReturnTrue(object sender,
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors sslPolicyErrors) { return true; }
+        public static RemoteCertificateValidationCallback GetDelegate() {
+            return new RemoteCertificateValidationCallback(Dummy.ReturnTrue);
+        }
+    }
+    "@
+        }
+        [System.Net.ServicePointManager]::ServerCertificateValidationCallback = [dummy]::GetDelegate()
+    }
+
     try {
+        # check webclient
         $result = Invoke-WebRequest -Uri "${healthcheckurl}Health/System" -UseBasicParsing -TimeoutSec 10
         if ($result.StatusCode -eq 200 -and ((ConvertFrom-Json $result.Content).result)) {
             # Web Client Health Check Endpoint will test Web Client, Service Tier and Database Connection
@@ -15,9 +42,11 @@ data:
         }
     } catch {
     }
+    
     exit 1
   SetupDatabase.ps1: |-
     $oldVal = $myPath 
     $myPath = $runPath
     . (Join-Path $runPath $MyInvocation.MyCommand.Name)
     $myPath = $oldVal
+{{ toYaml .Values.customScripts | indent 2 }}
