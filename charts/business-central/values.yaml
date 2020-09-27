@@ -1,9 +1,9 @@
 image:
-  # image.repository -- Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#TODO) for mor information. around the two options.
+  # image.repository -- Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options.
   repository: mcr.microsoft.com/dynamicsnav
   # image.tag -- Tag of the image to use
   tag: 10.0.17763.1397-generic
-  # image.artifactUrl -- URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#TODO) for mor information. around the two options.
+  # image.artifactUrl -- URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options.
   artifactUrl: https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1
   # image.pullPolicy -- Whether to `Always` try pulling the image or only `IfNotPresent`.
   pullPolicy: IfNotPresent
@@ -11,7 +11,7 @@ image:
 
 # password -- **Insecure** clear-text password of the admin user. Leave empty for a random password. Consider using `securePassword` and `passwordKeySecretName` instead.
 password: ""
-# securePassword -- AES-encrypted password of the admin user. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works.
+# securePassword -- AES-encrypted password of the admin user. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works.
 securePassword: ""
 
 
@@ -28,7 +28,7 @@ database:
   username: ""
   # database.password -- **Insecure** clear-text password of the user to connect with. Consider using `database.securePassword` and `passwordKeySecretName` instead.
   password: "" 
-  # database.securePassword -- AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works.
+  # database.securePassword -- AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works.
   securePassword: ""
 
 
@@ -63,7 +63,7 @@ customScripts:
   AdditionalSetup.ps1: |-
     Write-Host "This was created by Kubernetes."
 
-# passwordKeySecretName -- Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#TODO) on how this works.
+# passwordKeySecretName -- Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#setting-a-password) on how this works.
 passwordKeySecretName: ""
 
 # replicaCount -- Number of replicas to deploy.

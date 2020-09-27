@@ -2,7 +2,7 @@
 
 
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
+![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
@@ -206,6 +206,8 @@ For access to the NuGet feed you need to create a personal access token and stor
 kubectl create secret generic mypat --from-literal=pat=MwBEAE...
 ```
 
+When using this, **make sure to include** `--wait --timeout=10m` in your `helm install` to make sure that the hook is executed after Business Central is up and healthy.
+
 ### Disabling access to endpoints
 
 For some environments you may want to disable external access to some endpoints like the ones for development, OData or SOAP. Per default all endpoints can be accessed. By setting the port of specific endpoints to an empty string, you can disable the access:
@@ -229,16 +231,16 @@ service:
 | database.instance | string | `""` | SQL Server instance to connect to, e.g. `SQL2019`. Leave empty to use the default instance. |
 | database.name | string | `""` | Name of the database to connect to, e.g. `cronus`. |
 | database.password | string | `""` | **Insecure** clear-text password of the user to connect with. Consider using `database.securePassword` and `passwordKeySecretName` instead. |
-| database.securePassword | string | `""` | AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works. |
+| database.securePassword | string | `""` | AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works. |
 | database.server | string | `""` | SQL Server to connect to, e.g. `myserver.database.windows.net`. |
 | database.username | string | `""` | User used to connect to the SQL database, e.g. `sa`. |
 | env | object | *The two variables below are set per default* | Configure application via environment variables. See `values.yaml` for more options you can add. |
 | env.Accept_eula | string | `"Y"` | Whether to accept (`Y`) or decline (`N`) the [EULA](https://go.microsoft.com/fwlink/?linkid=861843). |
 | env.UseSSL | string | `"N"` | Whether to use SSL for the webclient (`Y`) or not (`N`). If set to `Y` generates a self-signed certificate per default. |
 | fullnameOverride | string | `""` | Override the full name of the deployment, e.g. `myfullnameoverride`. |
-| image.artifactUrl | string | `"https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"` | URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#TODO) for mor information. around the two options. |
+| image.artifactUrl | string | `"https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"` | URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options. |
 | image.pullPolicy | string | `"IfNotPresent"` | Whether to `Always` try pulling the image or only `IfNotPresent`. |
-| image.repository | string | `"mcr.microsoft.com/dynamicsnav"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#TODO) for mor information. around the two options. |
+| image.repository | string | `"mcr.microsoft.com/dynamicsnav"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options. |
 | image.tag | string | `"10.0.17763.1397-generic"` | Tag of the image to use |
 | imagePullSecrets | list | `[]` | List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod). |
 | ingress.annotations | object | `{}` | Annotations to add to the ingress resource, e.g. `kubernetes.io/tls-acme: "true"` |
@@ -249,7 +251,7 @@ service:
 | nodeSelector | object | *see below* | Use to select specific nodes to schedule the deployment to like described in the Kubernetes [docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector). |
 | nodeSelector."kubernetes.io/os" | string | `"windows"` | OS to schedule the deployment to. |
 | password | string | `""` | **Insecure** clear-text password of the admin user. Leave empty for a random password. Consider using `securePassword` and `passwordKeySecretName` instead. |
-| passwordKeySecretName | string | `""` | Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#TODO) on how this works. |
+| passwordKeySecretName | string | `""` | Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#setting-a-password) on how this works. |
 | podAnnotations | object | `{}` | [Annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) to add to the metadata of the Pods. |
 | podSecurityContext | object | `{}` | Configure the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) of the Pod. |
 | publish | object | *see below* | **EXPERIMENTAL**: Automatically download an AL app with `publish.download.image.*` and publish it with `publish.image.*` |
@@ -270,7 +272,7 @@ service:
 | publish.tolerations | list | `[]` | List with [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) the publish job has. |
 | replicaCount | int | `1` | Number of replicas to deploy. |
 | resources | object | `{}` | Limit [CPU](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit) and [memory](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/#specify-a-memory-request-and-a-memory-limit) resources this workload can use. |
-| securePassword | string | `""` | AES-encrypted password of the admin user. Requires `passwordKeySecretName` to be set. See [here](#TODO) on how this works. |
+| securePassword | string | `""` | AES-encrypted password of the admin user. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works. |
 | securityContext | object | `{}` | Configure the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) of the Container. |
 | service.ports.dev | int | `7049` | Port of the service to access the development endpoint. Remove to disable access. |
 | service.ports.dl | int | `8080` | Port of the service to access the files like the AL VS code extension via web. Remove to disable access. |
