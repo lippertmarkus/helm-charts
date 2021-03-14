@@ -17,7 +17,7 @@ securePassword: ""
 
 database:
   # database.custom -- Enable to connect to an external SQL server with a Business Central database.
-  custom: false  
+  custom: false
   # database.server -- SQL Server to connect to, e.g. `myserver.database.windows.net`.
   server: ""
   # database.instance -- SQL Server instance to connect to, e.g. `SQL2019`. Leave empty to use the default instance.
@@ -27,7 +27,7 @@ database:
   # database.username -- User used to connect to the SQL database, e.g. `sa`.
   username: ""
   # database.password -- **Insecure** clear-text password of the user to connect with. Consider using `database.securePassword` and `passwordKeySecretName` instead.
-  password: "" 
+  password: ""
   # database.securePassword -- AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works.
   securePassword: ""
 
@@ -187,7 +187,7 @@ publish:
       pullPolicy: Always
     # publish.download.params -- Parameters for downloading the AL app files. This is currently specific for `lippertmarkus/al-nuget`.
     # @default -- *see below*
-    params: 
+    params:
       # publish.download.params.nugetLocation -- URL of the NuGet feed to use, e.g. `https://myorg.pkgs.visualstudio.com/myproj/_packaging/myfeed/nuget/v3/index.json`
       nugetLocation: ""
       # publish.download.params.patSecretName -- Name of the Kubernetes secret with a `pat` field containing a personal access token for accessing the NuGet feed.
