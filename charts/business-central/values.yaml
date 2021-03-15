@@ -1,8 +1,8 @@
 image:
   # image.repository -- Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options.
-  repository: mcr.microsoft.com/dynamicsnav
+  repository: mcr.microsoft.com/businesscentral
   # image.tag -- Tag of the image to use
-  tag: 10.0.17763.1397-generic
+  tag: 10.0.17763.1397
   # image.artifactUrl -- URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options.
   artifactUrl: https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1
   # image.pullPolicy -- Whether to `Always` try pulling the image or only `IfNotPresent`.
@@ -17,7 +17,7 @@ securePassword: ""
 
 database:
   # database.custom -- Enable to connect to an external SQL server with a Business Central database.
-  custom: false  
+  custom: false
   # database.server -- SQL Server to connect to, e.g. `myserver.database.windows.net`.
   server: ""
   # database.instance -- SQL Server instance to connect to, e.g. `SQL2019`. Leave empty to use the default instance.
@@ -27,7 +27,7 @@ database:
   # database.username -- User used to connect to the SQL database, e.g. `sa`.
   username: ""
   # database.password -- **Insecure** clear-text password of the user to connect with. Consider using `database.securePassword` and `passwordKeySecretName` instead.
-  password: "" 
+  password: ""
   # database.securePassword -- AES-encrypted password of the user to connect with. Requires `passwordKeySecretName` to be set. See [here](#setting-a-password) on how this works.
   securePassword: ""
 
@@ -40,7 +40,7 @@ env:
   # env.UseSSL -- Whether to use SSL for the webclient (`Y`) or not (`N`). If set to `Y` generates a self-signed certificate per default.
   UseSSL: "N"
   # PublicDnsName: bc1.example.com
-  # Accept_outdated: Y
+  Accept_outdated: "Y"
   # Auth: NavUserPassword  # Windows, NavUserPassword
   # username: admin
   # licensefile: https://lic.example.com/lic.flf
@@ -187,7 +187,7 @@ publish:
       pullPolicy: Always
     # publish.download.params -- Parameters for downloading the AL app files. This is currently specific for `lippertmarkus/al-nuget`.
     # @default -- *see below*
-    params: 
+    params:
       # publish.download.params.nugetLocation -- URL of the NuGet feed to use, e.g. `https://myorg.pkgs.visualstudio.com/myproj/_packaging/myfeed/nuget/v3/index.json`
       nugetLocation: ""
       # publish.download.params.patSecretName -- Name of the Kubernetes secret with a `pat` field containing a personal access token for accessing the NuGet feed.
