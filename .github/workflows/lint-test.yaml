@@ -9,6 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
       - name: Set up Helm
         uses: azure/setup-helm@v1
         with:
