@@ -2,7 +2,7 @@
 
 
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
+![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
@@ -93,12 +93,12 @@ Instead of providing images for each Business Central version on each Windows ve
 To use the **generic image and artifacts**, set:
 ```yaml
 image:
-  repository: mcr.microsoft.com/dynamicsnav
-  tag: "10.0.17763.1397-generic"
+  repository: mcr.microsoft.com/businesscentral
+  tag: "10.0.17763.1397"
   artifactUrl: "https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"
 ```
 
-There's [a list of available tags](https://mcr.microsoft.com/v2/dynamicsnav/tags/list) where you should look after `*-generic` for the generic images. `*` should match the OS version of the Windows nodes within your cluster. Tags of the same Windows version but an [older build number also work fine](https://docs.microsoft.com/en-US/virtualization/windowscontainers/deploy-containers/version-compatibility#revision-number-patching).
+There's [a list of available tags](https://mcr.microsoft.com/v2/businesscentral/tags/list) where you should look after a tag matching the OS version of the Windows nodes within your cluster. Tags of the same Windows version but an [older build number also work fine](https://docs.microsoft.com/en-US/virtualization/windowscontainers/deploy-containers/version-compatibility#revision-number-patching).
 
 For getting the artifact URL you can use the [BcContainerHelper PowerShell module](https://www.powershellgallery.com/packages/BcContainerHelper/) with the `Get-BcArtifactUrl` Cmdlet like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
 
@@ -110,7 +110,7 @@ image:
   artifactUrl: ""
 ```
 
-You can build your own image with the `New-BcContainer` Cmdlet of the BcContainerHelper PowerShell module like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
+You can build your own image with the `New-BcImage` Cmdlet of the BcContainerHelper PowerShell module like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
 
 ### Using external databases
 
@@ -240,7 +240,7 @@ service:
 | fullnameOverride | string | `""` | Override the full name of the deployment, e.g. `myfullnameoverride`. |
 | image.artifactUrl | string | `"https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"` | URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options. |
 | image.pullPolicy | string | `"IfNotPresent"` | Whether to `Always` try pulling the image or only `IfNotPresent`. |
-| image.repository | string | `"mcr.microsoft.com/dynamicsnav"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options. |
+| image.repository | string | `"mcr.microsoft.com/businesscentral"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options. |
 | image.tag | string | `"10.0.17763.1397-generic"` | Tag of the image to use |
 | imagePullSecrets | list | `[]` | List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod). |
 | ingress.annotations | object | `{}` | Annotations to add to the ingress resource, e.g. `kubernetes.io/tls-acme: "true"` |
