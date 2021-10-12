@@ -30,6 +30,9 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          command:  # override to support containerd as well as docker
+          - powershell
+          - C:\Run\start.ps1
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: web
@@ -78,9 +81,9 @@ spec:
               - C:\Run\my\CheckHealth.ps1
             timeoutSeconds: 2
             initialDelaySeconds: 30
-            # wait up to 350s for startup
-            periodSeconds: 5
-            failureThreshold: 70
+            # wait up to 600s for startup
+            periodSeconds: 10
+            failureThreshold: 60
           env:
             - name: webserverinstance
               value: BC
