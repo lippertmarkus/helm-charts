@@ -39,7 +39,7 @@ spec:
               service:
                 name: {{ $fullName }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ .servicePort | default "web" }}
               {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ .servicePort | default "web" }}
