@@ -116,12 +116,12 @@ service:
     dl: 8080
 
 # ingress -- Ingress resources to create.
-# E.g. `[{"annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}]}]`
+# E.g. `[{"annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]`
 ingress: []
   # - annotations: {}
   #     kubernetes.io/ingress.class: nginx
   #     kubernetes.io/tls-acme: "true"
-  #   hosts: []
+  #   hosts:
   #     - host: bc1.example.com
   #       path: /
   #       servicePort: web
@@ -140,13 +140,10 @@ ingress: []
   #     - host: "dl.bc1.example.com"
   #       path: /
   #       servicePort: dl
-
-  # ingress.tls -- List of secrets with a TLS certificate and hosts from `ingress.hosts` to use the certificate for. See [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls).
-  # E.g. `[{"hosts":["bc1.example.com"],"secretName":"example-tls"}]`
-  tls: []
-  #  - secretName: example-tls
-  #    hosts:
-  #      - bc1.example.com
+  #   tls:
+  #     - secretName: example-tls
+  #       hosts:
+  #         - bc1.example.com
 
 # resources -- Limit [CPU](https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit) and [memory](https://kubernetes.io/docs/tasks/configure-pod-container/assign-memory-resource/#specify-a-memory-request-and-a-memory-limit) resources this workload can use.
 resources: {}
