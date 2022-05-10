@@ -85,8 +85,6 @@ spec:
             periodSeconds: 10
             failureThreshold: 60
           env:
-            - name: webserverinstance
-              value: BC
             {{- if .Values.image.artifactUrl }}
             - name: ArtifactUrl
               value: "{{ .Values.image.artifactUrl }}"

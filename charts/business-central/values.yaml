@@ -41,6 +41,7 @@ env:
   UseSSL: "N"
   # PublicDnsName: bc1.example.com
   Accept_outdated: "Y"
+  webserverinstance: BC
   # Auth: NavUserPassword  # Windows, NavUserPassword
   # username: admin
   # licensefile: https://lic.example.com/lic.flf
