@@ -33,9 +33,17 @@ spec:
       http:
         paths:
           - path: {{ .path | default "/" }}
+            pathType: Prefix
             backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $svcPort }}
+              {{- else }}
               serviceName: {{ $fullName }}
               servicePort: {{ .servicePort | default "web" }}
+              {{- end }}
     {{- end }}
   {{- end }}
 
