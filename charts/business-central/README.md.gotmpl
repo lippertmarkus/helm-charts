@@ -93,12 +93,12 @@ Instead of providing images for each Business Central version on each Windows ve
 To use the **generic image and artifacts**, set:
 ```yaml
 image:
-  repository: mcr.microsoft.com/dynamicsnav
-  tag: "10.0.17763.1397-generic"
+  repository: mcr.microsoft.com/businesscentral
+  tag: "10.0.17763.1397"
   artifactUrl: "https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"
 ```
 
-There's [a list of available tags](https://mcr.microsoft.com/v2/dynamicsnav/tags/list) where you should look after `*-generic` for the generic images. `*` should match the OS version of the Windows nodes within your cluster. Tags of the same Windows version but an [older build number also work fine](https://docs.microsoft.com/en-US/virtualization/windowscontainers/deploy-containers/version-compatibility#revision-number-patching).
+There's [a list of available tags](https://mcr.microsoft.com/v2/businesscentral/tags/list) where you should look after a tag matching the OS version of the Windows nodes within your cluster. Tags of the same Windows version but an [older build number also work fine](https://docs.microsoft.com/en-US/virtualization/windowscontainers/deploy-containers/version-compatibility#revision-number-patching).
 
 For getting the artifact URL you can use the [BcContainerHelper PowerShell module](https://www.powershellgallery.com/packages/BcContainerHelper/) with the `Get-BcArtifactUrl` Cmdlet like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
 
@@ -110,7 +110,7 @@ image:
   artifactUrl: ""
 ```
 
-You can build your own image with the `New-BcContainer` Cmdlet of the BcContainerHelper PowerShell module like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
+You can build your own image with the `New-BcImage` Cmdlet of the BcContainerHelper PowerShell module like described [here](https://freddysblog.com/2020/06/25/working-with-artifacts/).
 
 ### Using external databases
 

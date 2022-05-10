@@ -50,6 +50,9 @@ spec:
             - name: dev
               containerPort: 7049
               protocol: TCP
+            - name: snap
+              containerPort: 7083
+              protocol: TCP
             - name: dl
               containerPort: 8080
               protocol: TCP

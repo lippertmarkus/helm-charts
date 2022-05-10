@@ -2,7 +2,7 @@
 
 
 
-![Version: 1.0.4](https://img.shields.io/badge/Version-1.0.4-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
+![Version: 2.0.2](https://img.shields.io/badge/Version-2.0.2-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 16.5.15897.15953](https://img.shields.io/badge/AppVersion-16.5.15897.15953-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
@@ -238,15 +238,12 @@ service:
 | env.Accept_eula | string | `"Y"` | Whether to accept (`Y`) or decline (`N`) the [EULA](https://go.microsoft.com/fwlink/?linkid=861843). |
 | env.UseSSL | string | `"N"` | Whether to use SSL for the webclient (`Y`) or not (`N`). If set to `Y` generates a self-signed certificate per default. |
 | fullnameOverride | string | `""` | Override the full name of the deployment, e.g. `myfullnameoverride`. |
-| image.artifactUrl | string | `"https://bcartifacts.azureedge.net/onprem/16.5.15897.15953/w1"` | URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options. |
+| image.artifactUrl | string | `"https://bcartifacts.azureedge.net/sandbox/20.0.37253.40399/w1"` | URL of the Business Central artifacts to download and setup on startup. Use `""` if you use a pre-built image in `image.repository`. See [here](#using-artifacts-and-pre-built-images) for mor information. around the two options. |
 | image.pullPolicy | string | `"IfNotPresent"` | Whether to `Always` try pulling the image or only `IfNotPresent`. |
 | image.repository | string | `"mcr.microsoft.com/businesscentral"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options. |
-| image.tag | string | `"10.0.17763.1397-generic"` | Tag of the image to use |
+| image.tag | string | `"10.0.17763.2686"` | Tag of the image to use |
 | imagePullSecrets | list | `[]` | List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod). |
-| ingress.annotations | object | `{}` | Annotations to add to the ingress resource, e.g. `kubernetes.io/tls-acme: "true"` |
-| ingress.enabled | bool | `false` | Enable to allow access via [ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/#what-is-ingress). |
-| ingress.hosts | list | `[]` | List of hosts with `host`, `path` and `servicePort` which the ingress routes to the Business Central instance. See [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource). E.g. `[{"host":"bc1.example.com","path":"/","servicePort":"web"}]` routes traffic from `http://bc1.example.com/` to the webclient. Using a subpath in `path` may requires [rewriting via annotations](https://kubernetes.github.io/ingress-nginx/examples/rewrite/). The `servicePort` can be one of `web`, `webtls`, `odata`, `soap`, `dev`, `dl` described under `service.ports.*`. |
-| ingress.tls | list | `[]` | List of secrets with a TLS certificate and hosts from `ingress.hosts` to use the certificate for. See [Kubernetes docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls). E.g. `[{"hosts":["bc1.example.com"],"secretName":"example-tls"}]` |
+| ingress | list | `[]` | Ingress resources to create. E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]` |
 | nameOverride | string | `""` | Override the name of the Helm deployment which the chart name gets prefixed with, e.g. `myoverride-business-central`. |
 | nodeSelector | object | *see below* | Use to select specific nodes to schedule the deployment to like described in the Kubernetes [docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector). |
 | nodeSelector."kubernetes.io/os" | string | `"windows"` | OS to schedule the deployment to. |
