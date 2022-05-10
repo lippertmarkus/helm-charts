@@ -48,5 +48,4 @@ spec:
               servicePort: {{ .servicePort | default "web" }}
               {{- end }}
     {{- end }}
-  {{- end }}
 {{- end }}

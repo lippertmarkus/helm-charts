@@ -2,9 +2,9 @@ Application startup can take a bit, follow the logs with:
   kubectl logs -f deployment/{{ include "business-central.fullname" . }}
 
 Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ $host.path | default "/" }}/BC
+{{- if (first .Values.ingress).name }}
+{{- range $host := (first .Values.ingress).hosts }}
+  http{{ if (first $.Values.ingress).tls }}s{{ end }}://{{ $host.host }}{{ $host.path | default "/" }}/BC
 {{- end }}
 {{- else if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "business-central.fullname" . }})
