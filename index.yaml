@@ -58,6 +58,33 @@ entries:
   business-central:
   - apiVersion: v2
     appVersion: 16.5.15897.15953
+    created: "2022-05-10T10:38:38.895476321Z"
+    description: An unofficial Helm chart for Microsoft Dynamics 365 Business Central
+      on Kubernetes
+    digest: 44fe2a2859518da8794121708b6cc055cf3443e1881ab9e221df8d8d37f8cc40
+    home: https://dynamics.microsoft.com/en-us/business-central/
+    icon: https://github.com/lippertmarkus/helm-charts/raw/master/charts/business-central/logo.png
+    keywords:
+    - Microsoft
+    - Dynamics 365
+    - Business Central
+    - ERP
+    kubeVersion: '>= 1.18.0'
+    maintainers:
+    - email: markus9656@gmail.com
+      name: lippertmarkus
+      url: https://lippertmarkus.com/
+    name: business-central
+    sources:
+    - https://github.com/microsoft/nav-docker/
+    - https://github.com/microsoft/ALAppExtensions
+    - https://github.com/lippertmarkus/helm-charts/blob/master/charts/business-central
+    type: application
+    urls:
+    - https://github.com/lippertmarkus/helm-charts/releases/download/business-central-1.0.7/business-central-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v2
+    appVersion: 16.5.15897.15953
     created: "2022-05-10T10:33:38.740291178Z"
     description: An unofficial Helm chart for Microsoft Dynamics 365 Business Central
       on Kubernetes
