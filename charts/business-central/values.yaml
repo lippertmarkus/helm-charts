@@ -116,9 +116,10 @@ service:
     dl: 8080
 
 # ingress -- Ingress resources to create.
-# E.g. `[{"annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]`
+# E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]`
 ingress: []
-  # - annotations: {}
+  # - name: myingname
+  #   annotations: {}
   #     kubernetes.io/ingress.class: nginx
   #     kubernetes.io/tls-acme: "true"
   #   hosts:

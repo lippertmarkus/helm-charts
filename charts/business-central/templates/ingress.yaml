@@ -10,7 +10,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $fullName }}-{{ .name }}
   labels:
     {{- include "business-central.labels" $ | nindent 4 }}
   {{- with .annotations }}
