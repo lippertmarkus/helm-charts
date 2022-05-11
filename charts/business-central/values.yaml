@@ -60,9 +60,9 @@ env:
 
 
 # customScripts -- Add custom PowerShell scripts to the container. They can override the default scripts like described [here](https://github.com/microsoft/nav-docker/blob/master/HOWTO.md#appendix-1--scripts).
-customScripts:
-  AdditionalSetup.ps1: |-
-    Write-Host "This was created by Kubernetes."
+customScripts: {}
+  # AdditionalSetup.ps1: |-
+  #   Write-Host "This was created by Kubernetes."
 
 # passwordKeySecretName -- Name of the Kubernetes secret which contains the AES key within `passwordKey` for decrypting `secretPassword` or `database.secretPassword`. See [here](#setting-a-password) on how this works.
 passwordKeySecretName: ""
