@@ -160,7 +160,11 @@ spec:
       {{- range .Values.volumes }}
       - name: {{ .name }}
         persistentVolumeClaim:
+          {{- if .existingClaim }}
+          claimName: {{ .existingClaim }}
+          {{- else }}
           claimName: {{ include "business-central.fullname" $ }}-{{ .name }}
+          {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

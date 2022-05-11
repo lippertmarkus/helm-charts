@@ -2,7 +2,7 @@
 
 
 
-![Version: 2.2.5](https://img.shields.io/badge/Version-2.2.5-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
+![Version: 2.2.6](https://img.shields.io/badge/Version-2.2.6-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
