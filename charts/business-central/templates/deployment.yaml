@@ -69,21 +69,21 @@ spec:
             exec:
               command:
               - powershell
-              - C:\Run\my\CheckHealth.ps1
+              - C:\Run\CheckHealth.ps1
             periodSeconds: 5
             failureThreshold: 5
           readinessProbe:
             exec:
               command:
               - powershell
-              - C:\Run\my\CheckHealth.ps1
+              - C:\Run\CheckHealth.ps1
             periodSeconds: 5
             failureThreshold: 5
           startupProbe:
             exec:
               command:
               - powershell
-              - C:\Run\my\CheckHealth.ps1
+              - C:\Run\CheckHealth.ps1
             timeoutSeconds: 2
             initialDelaySeconds: 30
             # wait up to 600s for startup
