@@ -65,6 +65,10 @@ spec:
           - name: password-key
             mountPath: C:/Run/my/key
           {{- end }}
+          {{- range .Values.volumes }}
+          - name: {{ .name }}
+            mountPath: {{ .mountPath }}
+          {{- end }}
           livenessProbe:
             exec:
               command:
@@ -150,6 +154,11 @@ spec:
       - name: myscripts
         configMap:
           name: {{ include "business-central.fullname" . }}
+      {{- end }}
+      {{- range .Values.volumes }}
+      - name: {{ .name }}
+        persistentVolumeClaim:
+          claimName: {{ include "business-central.fullname" $ }}-{{ .name }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

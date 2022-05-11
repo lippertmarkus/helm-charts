@@ -70,6 +70,16 @@ passwordKeySecretName: ""
 # replicaCount -- Number of replicas to deploy.
 replicaCount: 1
 
+# volumes -- Volumes to create a PVC for and attach to the Pod.
+# E.g. `[{"name": "db", "storageClassName": "managed-csi-premium", "accessModes": ["ReadWriteOnce"], "storageRequest": "12Gi", "mountPath": "C:/DatabasesVol"}]`
+volumes: []
+  # - name: db
+  #   storageClassName: managed-csi-premium
+  #   accessModes: 
+  #     - ReadWriteOnce
+  #   storageRequest: 12Gi
+  #   mountPath: 'C:\DatabasesVol'
+
 # imagePullSecrets -- List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod).
 imagePullSecrets: []
 # nameOverride -- Override the name of the Helm deployment which the chart name gets prefixed with, e.g. `myoverride-business-central`.
@@ -116,7 +126,7 @@ service:
     dl: 8080
 
 # ingress -- Ingress resources to create.
-# E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]`
+# E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}], "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]}]`
 ingress: []
   # - name: myingname
   #   annotations: {}

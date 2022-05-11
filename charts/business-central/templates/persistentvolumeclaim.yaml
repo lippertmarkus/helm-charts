@@ -1,0 +1,17 @@
+{{- $fullName := include "business-central.fullname" $ -}}
+{{- range .Values.volumes }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $fullName }}-{{ .name }}
+spec:
+  storageClassName: {{ .storageClassName | default "default" }}
+  {{- with .accessModes }}
+  accessModes:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .storageRequest }}
+{{- end }}

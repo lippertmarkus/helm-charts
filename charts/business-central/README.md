@@ -2,7 +2,7 @@
 
 
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
+![Version: 2.2.4](https://img.shields.io/badge/Version-2.2.4-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
@@ -226,7 +226,7 @@ service:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Constrain which nodes the workload is eligible to be scheduled on, see [Kubernetes docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity). |
-| customScripts | object | `{"AdditionalSetup.ps1":"Write-Host \"This was created by Kubernetes.\""}` | Add custom PowerShell scripts to the container. They can override the default scripts like described [here](https://github.com/microsoft/nav-docker/blob/master/HOWTO.md#appendix-1--scripts). |
+| customScripts | object | `{}` | Add custom PowerShell scripts to the container. They can override the default scripts like described [here](https://github.com/microsoft/nav-docker/blob/master/HOWTO.md#appendix-1--scripts). |
 | database.custom | bool | `false` | Enable to connect to an external SQL server with a Business Central database. |
 | database.instance | string | `""` | SQL Server instance to connect to, e.g. `SQL2019`. Leave empty to use the default instance. |
 | database.name | string | `""` | Name of the database to connect to, e.g. `cronus`. |
@@ -243,7 +243,7 @@ service:
 | image.repository | string | `"mcr.microsoft.com/businesscentral"` | Repository of the image to use. You can use a generic image and set `image.artifactUrl` or use a pre-built image and set `image.artifactUrl` to `""`. See [here](#using-artifacts-and-pre-built-images) for more information. around the two options. |
 | image.tag | string | `"10.0.17763.2686"` | Tag of the image to use |
 | imagePullSecrets | list | `[]` | List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod). |
-| ingress | list | `[]` | Ingress resources to create. E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}, "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]]}]` |
+| ingress | list | `[]` | Ingress resources to create. E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}], "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]}]` |
 | nameOverride | string | `""` | Override the name of the Helm deployment which the chart name gets prefixed with, e.g. `myoverride-business-central`. |
 | nodeSelector | object | *see below* | Use to select specific nodes to schedule the deployment to like described in the Kubernetes [docs](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector). |
 | nodeSelector."kubernetes.io/os" | string | `"windows"` | OS to schedule the deployment to. |
@@ -280,3 +280,4 @@ service:
 | service.type | string | `"ClusterIP"` | [Type of the service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) which exposes Business Central, e.g. `ClusterIP`, `LoadBalancer` or `NodePort`. |
 | serviceAccount.name | string | `""` | The name of the [service account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) to use. |
 | tolerations | list | `[]` | List with [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) this workload has. |
+| volumes | list | `[]` | Volumes to create a PVC for and attach to the Pod. E.g. `[{"name": "db", "storageClassName": "managed-csi-premium", "accessModes": ["ReadWriteOnce"], "storageRequest": "12Gi", "mountPath": "C:/DatabasesVol"}]` |
