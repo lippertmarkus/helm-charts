@@ -57,8 +57,10 @@ spec:
               containerPort: 8080
               protocol: TCP
           volumeMounts:
+          {{- if .Values.customScripts }}
           - name: myscripts
             mountPath: C:/Run/my
+          {{- end }}
           {{- if .Values.passwordKeySecretName }}
           - name: password-key
             mountPath: C:/Run/my/key
@@ -144,9 +146,11 @@ spec:
         secret:
           secretName: {{ .Values.passwordKeySecretName }}
       {{- end }}
+      {{- if .Values.customScripts }}
       - name: myscripts
         configMap:
           name: {{ include "business-central.fullname" . }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

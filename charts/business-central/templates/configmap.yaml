@@ -49,4 +49,6 @@ data:
     $myPath = $runPath
     . (Join-Path $runPath $MyInvocation.MyCommand.Name)
     $myPath = $oldVal
+{{- if .Values.customScripts }}
 {{ toYaml .Values.customScripts | indent 2 }}
+{{- end }}
