@@ -59,6 +59,9 @@ env:
   # exitOnError: N
 
 
+# updateStrategy -- The strategy to use when updating pods. Either `Recreate` or `RollingUpdate`
+updateStrategy: Recreate
+
 # customScripts -- Add custom PowerShell scripts to the container. They can override the default scripts like described [here](https://github.com/microsoft/nav-docker/blob/master/HOWTO.md#appendix-1--scripts).
 customScripts: {}
   # AdditionalSetup.ps1: |-

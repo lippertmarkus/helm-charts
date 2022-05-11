@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "business-central.labels" . | nindent 4 }}
 spec:
+  strategy:
+    type: {{ .Values.updateStrategy }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:

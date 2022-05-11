@@ -2,7 +2,7 @@
 
 
 
-![Version: 2.2.4](https://img.shields.io/badge/Version-2.2.4-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
+![Version: 2.2.5](https://img.shields.io/badge/Version-2.2.5-informational?style=flat-square)  ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)  ![AppVersion: 20.0.37253.40399](https://img.shields.io/badge/AppVersion-20.0.37253.40399-informational?style=flat-square) 
 
 > Streamline your processes, make smarter decisions, and accelerate growth with Dynamics 365 Business Central — a comprehensive business management solution designed for small to medium-sized businesses.
 >
@@ -280,4 +280,5 @@ service:
 | service.type | string | `"ClusterIP"` | [Type of the service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) which exposes Business Central, e.g. `ClusterIP`, `LoadBalancer` or `NodePort`. |
 | serviceAccount.name | string | `""` | The name of the [service account](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) to use. |
 | tolerations | list | `[]` | List with [tolerations](https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/) this workload has. |
+| updateStrategy | string | `"Recreate"` | The strategy to use when updating pods. Either `Recreate` or `RollingUpdate` |
 | volumes | list | `[]` | Volumes to create a PVC for and attach to the Pod. E.g. `[{"name": "db", "storageClassName": "managed-csi-premium", "accessModes": ["ReadWriteOnce"], "storageRequest": "12Gi", "mountPath": "C:/DatabasesVol"}]` |
