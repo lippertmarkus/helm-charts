@@ -98,6 +98,9 @@ serviceAccount:
 # podAnnotations -- [Annotations](https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/) to add to the metadata of the Pods.
 podAnnotations: {}
 
+# podSelectorLabels -- Additional [labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels) to add to the metadata of the Pods.
+podSelectorLabels: {}
+
 # podSecurityContext -- Configure the [security context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/) of the Pod.
 podSecurityContext: {}
   # fsGroup: 2000
