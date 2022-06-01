@@ -136,7 +136,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "business-central.fullname" . }}
                   key: securePassword
-            {{- else }}
+            {{- else if not .Values.env.password }}
             - name: password
               valueFrom:
                 secretKeyRef:
