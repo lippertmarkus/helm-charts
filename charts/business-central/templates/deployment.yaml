@@ -165,6 +165,9 @@ spec:
         {{- if .secret }}
         secret: 
           secretName: {{ .secret }}
+          items: 
+            - key: {{ .secretKey }}
+              path: {{ .name }}
         {{- else }}
         persistentVolumeClaim:
           {{- if .existingClaim }}

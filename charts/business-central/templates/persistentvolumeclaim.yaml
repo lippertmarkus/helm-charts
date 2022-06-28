@@ -1,6 +1,6 @@
 {{- $fullName := include "business-central.fullname" $ -}}
 {{- range .Values.volumes }}
-{{- if not .existingClaim }}
+{{- if and (not .existingClaim) (not .secret) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
