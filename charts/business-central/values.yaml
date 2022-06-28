@@ -83,6 +83,7 @@ volumes: []
   #   storageRequest: 12Gi
   #   mountPath: 'C:\DatabasesVol'
   #   existingClaim: 'myClaim'
+  #   #secret: mysecret
 
 # imagePullSecrets -- List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod).
 imagePullSecrets: []

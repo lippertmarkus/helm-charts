@@ -162,12 +162,17 @@ spec:
       {{- end }}
       {{- range .Values.volumes }}
       - name: {{ .name }}
+        {{- if .secret }}
+        secret: 
+          secretName: {{ .secret }}
+        {{- else }}
         persistentVolumeClaim:
           {{- if .existingClaim }}
           claimName: {{ .existingClaim }}
           {{- else }}
           claimName: {{ include "business-central.fullname" $ }}-{{ .name }}
           {{- end }}
+        {{- end }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -1,0 +1,74 @@
+volumes:
+  - name: db
+    storageClassName: managed-csi-premium
+    accessModes: 
+      - ReadWriteOnce
+    storageRequest: 12Gi
+    mountPath: 'C:\DatabasesVol'
+  - name: share
+    mountPath: 'C:\azurefileshare'
+    existingClaim: azurefileshare
+image:
+  repository: cosmoppi.azurecr.io/bcartifacts/cosmo-bc
+  tag: onprem-19.5.36567.36700-de
+  artifactUrl: ""
+imagePullSecrets:
+  - name: regcred
+podSelectorLabels:
+  cc.owner: mlippert9438_cosmoconsult.com
+env:
+  Accept_eula: "Y"
+  Accept_outdated: "Y"
+  auth: navuserpassword
+  customNavSettings: PublicODataBaseUrl=https://ppi-demo.westeurope.cloudapp.azure.com/mytestrest/odata,PublicSOAPBaseUrl=https://ppi-demo.westeurope.cloudapp.azure.com/mytestsoap/ws,PublicWebBaseUrl=https://ppi-demo.westeurope.cloudapp.azure.com/mytest
+  enableApiServices: "Y"
+  enablePerformanceCounter: "true"
+  enablePremium: "true"
+  folders: c:\run=https://demue-eiafhamf.westeurope.cloudapp.azure.com/automation/0.11/startupfile/package/dev
+  healthCheckBaseUrl: https://localhost/mytest
+  licensefile: https://ccppi.blob.core.windows.net/lic/devlic-bc20-de?sv=2019-07-07&st=2022-05-02T13%3A32%3A06Z&se=2022-08-01T00%3A00%3A00Z&sr=b&sp=r&sig=9vdqR5KOfik6r0e8oIShBEFEEuVQ5r4zwmY7z5io0fE%3D
+  publicdnsname: ppi-demo.westeurope.cloudapp.azure.com
+  username: mlippert9438
+  UseSSL: "Y"
+  webserverinstance: mytest
+ingress:
+  - name: web
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    hosts:
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytest
+      servicePort: webtls
+    tls:
+      - hosts:
+        - ppi-demo.westeurope.cloudapp.azure.com
+  - name: apis
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      nginx.ingress.kubernetes.io/rewrite-target: /BC/$2
+    hosts:
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytestdev(/|$)(.*)
+      servicePort: dev
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytestrest(/|$)(.*)
+      servicePort: odata
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytestsoap(/|$)(.*)
+      servicePort: soap
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytestsnap(/|$)(.*)
+      servicePort: snap
+    tls:
+      - hosts:
+        - ppi-demo.westeurope.cloudapp.azure.com
+  - name: dl
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    hosts:
+    - host: ppi-demo.westeurope.cloudapp.azure.com
+      path: /mytestdl(/|$)(.*)
+      servicePort: dl
+    tls:
+      - hosts:
+        - ppi-demo.westeurope.cloudapp.azure.com
