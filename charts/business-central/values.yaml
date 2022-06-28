@@ -85,6 +85,7 @@ volumes: []
   #   existingClaim: 'myClaim'
   #   #secret: mylicenses
   #   #secretKey: mylic-bc19
+  #   #secretFileName: mylic.flf
 
 # imagePullSecrets -- List with Kubernetes secrets for pulling images from private repositories. See [docs](https://kubernetes.io/docs/concepts/containers/images/#referring-to-an-imagepullsecrets-on-a-pod).
 imagePullSecrets: []
