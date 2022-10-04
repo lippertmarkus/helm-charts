@@ -7,6 +7,12 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
+    {{- if .Values.service.ports.ssh }}
+    - port: {{ .Values.service.ports.ssh }}
+      targetPort: ssh
+      protocol: TCP
+      name: ssh
+    {{- end }}    
     {{- if .Values.service.ports.web }}
     - port: {{ .Values.service.ports.web }}
       targetPort: web
