@@ -1,0 +1,16 @@
+{{- if .Values.service.ports.ssh }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "business-central.fullname" . }}-ssh
+  labels:
+    {{- include "business-central.labels" . | nindent 4 }}
+spec:
+  type: LoadBalancer
+  ports:
+  - name: ssh
+    port: {{ .Values.service.ports.ssh }}
+    targetPort: ssh
+  selector:
+    {{- include "business-central.selectorLabels" . | nindent 4 }}
+{{- end }}

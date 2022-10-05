@@ -78,7 +78,7 @@ replicaCount: 1
 volumes: []
   # - name: db
   #   storageClassName: managed-csi-premium
-  #   accessModes: 
+  #   accessModes:
   #     - ReadWriteOnce
   #   storageRequest: 12Gi
   #   mountPath: 'C:\DatabasesVol'
@@ -122,6 +122,8 @@ service:
   # service.type -- [Type of the service](https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types) which exposes Business Central, e.g. `ClusterIP`, `LoadBalancer` or `NodePort`.
   type: ClusterIP
   ports:
+    # service.ports.ssh -- Port of the service to access the web client. Remove to disable access.
+    ssh: ""
     # service.ports.web -- Port of the service to access the web client. Remove to disable access.
     web: 80
     # service.ports.webtls -- Port of the service to access the web client via TLS. Remove to disable access.
