@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "business-central.fullname" . }}
+  name: {{ include "business-central.fullname" . }}-ssh
   labels:
     {{- include "business-central.labels" . | nindent 4 }}
 spec:
