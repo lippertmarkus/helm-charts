@@ -123,7 +123,7 @@ service:
   type: ClusterIP
   ports:
     # service.ports.ssh -- Port of the service to access the web client. Remove to disable access.
-    ssh: 22
+    ssh: ""
     # service.ports.web -- Port of the service to access the web client. Remove to disable access.
     web: 80
     # service.ports.webtls -- Port of the service to access the web client via TLS. Remove to disable access.
@@ -136,7 +136,6 @@ service:
     dev: 7049
     # service.ports.dl -- Port of the service to access the files like the AL VS code extension via web. Remove to disable access.
     dl: 8080
-  sshEnabled: ""
 
 # ingress -- Ingress resources to create.
 # E.g. `[{"name": "myingname", "annotations": { "kubernetes.io/ingress.class": "nginx" }, "hosts":[{"host": "bc1.example.com", "path": "/", "servicePort": "web"}], "tls": [{"secretName": "example-tls", "hosts": ["bc1.example.com"]}]}]`

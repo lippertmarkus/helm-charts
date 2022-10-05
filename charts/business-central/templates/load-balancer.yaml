@@ -1,4 +1,4 @@
-{{- if .Values.service.sshEnabled }}
+{{- if .Values.service.ports.ssh }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -8,9 +8,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - name: node
+  - name: ssh
     port: {{ .Values.service.ports.ssh }}
-    targetPort: node
+    targetPort: ssh
   selector:
     {{- include "business-central.selectorLabels" . | nindent 4 }}
 {{- end }}
