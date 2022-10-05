@@ -78,7 +78,7 @@ replicaCount: 1
 volumes: []
   # - name: db
   #   storageClassName: managed-csi-premium
-  #   accessModes: 
+  #   accessModes:
   #     - ReadWriteOnce
   #   storageRequest: 12Gi
   #   mountPath: 'C:\DatabasesVol'
