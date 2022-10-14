@@ -5,6 +5,7 @@ metadata:
   name: {{ include "business-central.fullname" . }}-ssh
   labels:
     {{- include "business-central.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ssh
 spec:
   type: LoadBalancer
   ports:
